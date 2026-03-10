@@ -1,18 +1,48 @@
-import { lazy } from "react";
+// import { lazy } from "react";
+import { ShuffleIcon } from "lucide-react";
+import routes from "./routes";
+
+const getBaseUrl = () => {
+  const url = window.location.href;
+  const match = url.match(/^(.*\/facility\/[0-9a-fA-F-]{36})/);
+  const baseUrl = match ? match[1] : url;
+  return baseUrl;
+};
 
 const manifest = {
-  // REQUIRED: unique plugin identifier
   plugin: "care_quick_assign",
-  // Routes your plugin adds to the app (details in Section 4)
-  routes: {},
-  // Extensions (e.g., "DoctorConnectButtons", "PatientExternalRegistration")
+  routes: routes,
   extends: [],
-  // Pluggable components injected into host UI slots
   components: {},
-  // Sidebar navigation items (facility context)
-  navItems: [],
-  // Admin panel sidebar items
-  adminNavItems: [],
+  navItems: [
+    {
+      name: "Care Quick Assign",
+      icon: <ShuffleIcon className="care-svg-icon__baseline" />,
+      children: [
+        {
+          name: "Quick Assign Config",
+          get url() {
+            const baseUrl = getBaseUrl()
+            return `${baseUrl}/care_quick_assign/config`
+          }
+        },
+        {
+          name: "Failed Assignments",
+          get url() {
+            const baseUrl = getBaseUrl()
+            return `${baseUrl}/care_quick_assign/unassigned`
+          }
+        },
+        {
+          name: "Metrics",
+          get url() {
+            const baseUrl = getBaseUrl()
+            return `${baseUrl}/care_quick_assign/metrics`
+          }
+        }
+      ]
+    },
+  ],
 };
 
 export default manifest;
