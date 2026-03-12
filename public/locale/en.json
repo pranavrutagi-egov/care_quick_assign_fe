@@ -1,4 +1,22 @@
 {
-    "care_quick_assign": "Care Quick Assign",
-    "quick_assign_config": "Quick Assign Config"
+    "quick_assign_configuration": "Quick Assign Configuration",
+    "quick_assign_configuration_description": "Manage the configuration that controls how newly registered patients are automatically assigned to the practitoners",
+    "quick_assign_enabled": "Enable quick assign feature",
+    "quick_assign_enabled_description": "Toggle this switch to enable or disable the quick assign feature",
+    "general_settings": "General settings",
+    "general_settings_description": "Basic limits and retry settings for patient assignment",
+    "max_patients_per_staff": "Maximum patients per staff",
+    "max_patients_per_staff_description": "Maximum number of patients a practitioner can have in a day",
+    "window_size": "Window size",
+    "window_size_description": "Time span (in days) during which patient assignments are attempted.",
+    "retry_attempts": "Retry attempts",
+    "retry_attempts_description": "Number of times the system retries automated assignment",
+    "assignment_weights": "Assignment Weights",
+    "assignment_weights_description": "Define how factors influence selecting the most suitable practitioner for a patient.",
+    "skill_weight": "Skill Match Weight",
+    "skill_weight_description": "Prioritizes matching practitioner skills with patient care needs.",
+    "workload_weight": "Workload Balance Weight",
+    "workload_weight_description": "Prioritizes equal workload distribution among practitioners.",
+    "location_weight": "Location Distance Weight",
+    "location_weight_description": "Prioritizes practitioners located closer to the patient."
 }
