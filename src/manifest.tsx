@@ -1,6 +1,5 @@
-// import { lazy } from "react";
 import { ShuffleIcon } from "lucide-react";
-import routes from "./routes";
+import routes from "@/routes";
 
 const getBaseUrl = () => {
   const url = window.location.href;
@@ -20,27 +19,20 @@ const manifest = {
       icon: <ShuffleIcon className="care-svg-icon__baseline" />,
       children: [
         {
-          name: "Quick Assign Config",
-          get url() {
-            const baseUrl = getBaseUrl()
-            return `${baseUrl}/care_quick_assign/config`
-          }
-        },
-        {
           name: "Failed Assignments",
           get url() {
-            const baseUrl = getBaseUrl()
-            return `${baseUrl}/care_quick_assign/unassigned`
-          }
+            const baseUrl = getBaseUrl();
+            return `${baseUrl}/care_quick_assign/unassigned`;
+          },
         },
         {
-          name: "Metrics",
+          name: "Quick Assign Config",
           get url() {
-            const baseUrl = getBaseUrl()
-            return `${baseUrl}/care_quick_assign/metrics`
-          }
-        }
-      ]
+            const baseUrl = getBaseUrl();
+            return `${baseUrl}/care_quick_assign/config`;
+          },
+        },
+      ],
     },
   ],
 };

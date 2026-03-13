@@ -20,6 +20,10 @@ export function Counter({
 }: CounterProps) {
   const [count, setCount] = React.useState(value);
 
+  React.useEffect(() => {
+    setCount(value);
+  }, [value]);
+
   const update = (newValue: number) => {
     if (min !== undefined && newValue < min) return;
     if (max !== undefined && newValue > max) return;
