@@ -1,4 +1,7 @@
 {
+  "no_config_set": "कोई कॉन्फ़िगरेशन नहीं",
+  "no_config_set_description": "ऑटो-असाइन कॉन्फ़िगरेशन सेट नहीं है।",
+  "create_configuration": "कॉन्फ़िगरेशन बनाएं",
   "edit": "एडिट",
   "cancel": "रद्द करें",
   "saving": "सेव हो रहा है",
@@ -15,8 +18,8 @@
   "max_patients_in_total_description": "एक दिन में सुविधा में कुल अधिकतम कितने मरीज हो सकते हैं",
   "window_size": "समय अवधि",
   "window_size_description": "समय अवधि (दिनों में) जिसके दौरान मरीज असाइन करने का प्रयास किया जाता है",
-  "retry_attempts": "पुनः प्रयास",
-  "retry_attempts_description": "स्वचालित असाइनमेंट के लिए सिस्टम कितनी बार पुनः प्रयास करेगा",
+  "max_retry_attempts": "पुनः प्रयास",
+  "max_retry_attempts_description": "स्वचालित असाइनमेंट के लिए सिस्टम कितनी बार पुनः प्रयास करेगा",
   "assignment_weights": "असाइनमेंट प्राथमिकताएँ",
   "assignment_weights_description": "यह तय करता है कि कौन-से कारक मरीज के लिए सबसे उपयुक्त चिकित्सक चुनने को कितना प्रभावित करेंगे",
   "skill_weight": "कौशल मिलान प्राथमिकता",

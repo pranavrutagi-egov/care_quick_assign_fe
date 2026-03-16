@@ -20,7 +20,8 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormField, FormItem, FormControl } from "@/components/ui/form";
-import { PencilIcon } from "lucide-react";
+import { PencilIcon, SettingsIcon } from "lucide-react";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const assignmentConfigSchema = z.object({
   enabled: z.boolean(),
@@ -28,11 +29,75 @@ const assignmentConfigSchema = z.object({
   max_patients_in_total: z.number().min(1, "Must be at least 1"),
   skill_weight: z.number().min(0),
   workload_weight: z.number().min(0),
-  retry_attempts: z.number().min(0),
+  max_retry_attempts: z.number().min(0),
   window_size: z.number().min(1, "Must be at least 1"),
 });
 
 type AssignmentConfigForm = z.infer<typeof assignmentConfigSchema>;
+
+function LoadingSkeleton() {
+  return (
+    <div className="container mx-auto">
+      <div className="flex flex-col sm:flex-row items-start justify-between mb-1 sm:mb-2">
+        <div className="space-y-2">
+          <Skeleton className="h-7 w-64" />
+          <Skeleton className="h-4 w-96" />
+        </div>
+        <Skeleton className="h-9 w-20" />
+      </div>
+
+      <br />
+
+      <Card className="flex flex-col justify-center p-8 border border-gray-200 bg-white shadow-sm">
+        <div className="flex items-center justify-between">
+          <div className="space-y-2">
+            <Skeleton className="h-5 w-48" />
+            <Skeleton className="h-4 w-72" />
+          </div>
+          <Skeleton className="h-6 w-11 rounded-full" />
+        </div>
+      </Card>
+
+      <br />
+
+      <Card className="flex flex-col justify-center p-8 border border-gray-200 bg-white shadow-sm gap-6">
+        <div className="space-y-2">
+          <Skeleton className="h-5 w-40" />
+          <Skeleton className="h-4 w-64" />
+        </div>
+        <Separator className="bg-gray-300" />
+        {[1, 2, 3, 4].map((i) => (
+          <div key={i} className="flex items-center justify-between">
+            <div className="space-y-2">
+              <Skeleton className="h-4 w-44" />
+              <Skeleton className="h-3 w-72" />
+            </div>
+            <Skeleton className="h-9 w-28" />
+          </div>
+        ))}
+      </Card>
+
+      <br />
+
+      <Card className="flex flex-col justify-center p-8 border border-gray-200 bg-white shadow-sm gap-6">
+        <div className="space-y-2">
+          <Skeleton className="h-5 w-44" />
+          <Skeleton className="h-4 w-64" />
+        </div>
+        <Separator className="bg-gray-300" />
+        {[1, 2].map((i) => (
+          <div key={i} className="flex items-center justify-between">
+            <div className="space-y-2">
+              <Skeleton className="h-4 w-36" />
+              <Skeleton className="h-3 w-64" />
+            </div>
+            <Skeleton className="h-9 w-28" />
+          </div>
+        ))}
+      </Card>
+    </div>
+  );
+}
 
 interface Props {
   facilityId: string;
@@ -50,6 +115,8 @@ export default function QuickAssignConfig({ facilityId }: Props) {
     enabled: !!facilityId,
   });
 
+  const isConfigured = data?.configured ?? false;
+
   const form = useForm<AssignmentConfigForm>({
     resolver: zodResolver(assignmentConfigSchema),
     defaultValues: {
@@ -58,25 +125,24 @@ export default function QuickAssignConfig({ facilityId }: Props) {
       max_patients_in_total: 1000,
       skill_weight: 4,
       workload_weight: 5,
-      retry_attempts: 0,
+      max_retry_attempts: 0,
       window_size: 1,
     },
   });
 
   useEffect(() => {
-    if (data) {
-      console.log("Saving data in form", data);
+    if (data?.data) {
       form.reset({
-        enabled: data.enabled,
-        max_patients_per_staff: data.max_patients_per_staff,
-        max_patients_in_total: data.max_patients_in_total,
-        skill_weight: data.skill_weight,
-        workload_weight: data.workload_weight,
-        retry_attempts: data.retry_attempts,
-        window_size: data.window_size,
+        enabled: data.data.enabled,
+        max_patients_per_staff: data.data.max_patients_per_staff,
+        max_patients_in_total: data.data.max_patients_in_total,
+        skill_weight: data.data.skill_weight,
+        workload_weight: data.data.workload_weight,
+        max_retry_attempts: data.data.max_retry_attempts,
+        window_size: data.data.window_size,
       });
     }
-  }, [data, form]);
+  }, [data?.data, form]);
 
   const { mutate: saveConfig, isPending } = useMutation({
     mutationFn: (formData: AssignmentConfigForm) =>
@@ -108,8 +174,46 @@ export default function QuickAssignConfig({ facilityId }: Props) {
         hideTitleOnPage
         className="p-0 care-quick-assign-container"
       >
-        <div className="container mx-auto flex items-center justify-center py-20">
-          <p className="text-gray-500">{t("loading")}</p>
+        <LoadingSkeleton />
+      </Page>
+    );
+  }
+
+  if (isConfigured === false && isEditing === false) {
+    return (
+      <Page
+        title={t("quick_assign_configuration")}
+        hideTitleOnPage
+        className="p-0 care-quick-assign-container"
+      >
+        <div className="container mx-auto">
+          <div className="mb-1 sm:mb-2">
+            <h3>{t("quick_assign_configuration")}</h3>
+            <p className="text-gray-600 text-sm">
+              {t("quick_assign_configuration_description")}
+            </p>
+          </div>
+
+          <br />
+
+          <Card className="flex flex-col items-center justify-center border border-dashed border-gray-300 bg-white py-16 px-8">
+            <div className="rounded-full bg-gray-100 p-3">
+              <SettingsIcon className="h-6 w-6 text-gray-400" />
+            </div>
+            <h4 className="mt-4 text-base font-semibold text-gray-900">
+              {t("no_config_set")}
+            </h4>
+            <p className="mt-1 text-sm text-gray-500 text-center max-w-sm">
+              {t("no_config_set_description")}
+            </p>
+            <Button
+              className="mt-5"
+              variant="primary_gradient"
+              onClick={() => setIsEditing(true)}
+            >
+              {t("create_configuration")}
+            </Button>
+          </Card>
         </div>
       </Page>
     );
@@ -130,9 +234,7 @@ export default function QuickAssignConfig({ facilityId }: Props) {
             </p>
           </div>
           {disabled && (
-            <Button
-              onClick={() => setIsEditing(true)}
-            >
+            <Button onClick={() => setIsEditing(true)}>
               <PencilIcon />
               {t("edit")}
             </Button>
@@ -272,15 +374,15 @@ export default function QuickAssignConfig({ facilityId }: Props) {
 
                     <FieldSet className="flex-row gap-4 justify-between">
                       <div className="flex flex-col grow">
-                        <FieldLegend>{t("retry_attempts")}</FieldLegend>
+                        <FieldLegend>{t("max_retry_attempts")}</FieldLegend>
                         <FieldDescription>
-                          {t("retry_attempts_description")}
+                          {t("max_retry_attempts_description")}
                         </FieldDescription>
                       </div>
                       <Field className="w-auto">
                         <FormField
                           control={form.control}
-                          name="retry_attempts"
+                          name="max_retry_attempts"
                           render={({ field }) => (
                             <FormItem>
                               <FormControl>
@@ -331,6 +433,8 @@ export default function QuickAssignConfig({ facilityId }: Props) {
                                 <Counter
                                   value={field.value}
                                   onChange={field.onChange}
+                                  min={1}
+                                  max={5}
                                 />
                               </FormControl>
                             </FormItem>
@@ -358,6 +462,8 @@ export default function QuickAssignConfig({ facilityId }: Props) {
                                 <Counter
                                   value={field.value}
                                   onChange={field.onChange}
+                                  min={1}
+                                  max={5}
                                 />
                               </FormControl>
                             </FormItem>

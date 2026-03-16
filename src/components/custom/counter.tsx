@@ -47,7 +47,7 @@ export function Counter({
         variant="outline"
         size="icon"
         onClick={decrement}
-        disabled={count <= min}
+        disabled={min !== undefined && count <= min}
         className="border-gray-300"
       >
         <Minus className="h-4 w-4" />

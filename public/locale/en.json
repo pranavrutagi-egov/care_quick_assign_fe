@@ -1,4 +1,7 @@
 {
+    "no_config_set": "No configuration",
+    "no_config_set_description": "Auto-assign configuration not set.",
+    "create_configuration": "Create configuration",
     "edit": "Edit",
     "cancel": "Cancel",
     "saving": "Saving",
@@ -15,8 +18,8 @@
     "max_patients_in_total_description": "Maximum number of patients the facility can have in a day",
     "window_size": "Window size",
     "window_size_description": "Time span (in days) during which patient assignments are attempted.",
-    "retry_attempts": "Retry attempts",
-    "retry_attempts_description": "Number of times the system retries automated assignment",
+    "max_retry_attempts": "Retry attempts",
+    "max_retry_attempts_description": "Number of times the system retries automated assignment",
     "assignment_weights": "Assignment Weights",
     "assignment_weights_description": "Define how factors influence selecting the most suitable practitioner for a patient.",
     "skill_weight": "Skill Match Weight",
