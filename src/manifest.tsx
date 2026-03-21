@@ -18,13 +18,13 @@ const manifest = {
       name: "Care Quick Assign",
       icon: <ShuffleIcon className="care-svg-icon__baseline" />,
       children: [
-        // {
-        //   name: "Failed Assignments",
-        //   get url() {
-        //     const baseUrl = getBaseUrl();
-        //     return `${baseUrl}/care_quick_assign/failed_assignments`;
-        //   },
-        // },
+        {
+          name: "Failed Assignments",
+          get url() {
+            const baseUrl = getBaseUrl();
+            return `${baseUrl}/care_quick_assign/failed_assignments`;
+          },
+        },
         {
           name: "Quick Assign Config",
           get url() {

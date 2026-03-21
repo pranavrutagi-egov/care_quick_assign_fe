@@ -5,7 +5,10 @@ import {
 } from "@/types/assignmentConfig";
 import { HttpMethod } from "@/apis/types";
 import { request } from "@/apis/query";
-// import { QuickAssignFailureEventEvent } from "@/types/quickAssignEvent";
+import {
+  PaginatedResponse,
+  QuickAssignFailureEvent,
+} from "@/types/quickAssignEvent";
 
 export const apis = {
   quick_assign_config: {
@@ -23,12 +26,18 @@ export const apis = {
         data,
       ),
   },
-  // quick_assigned: {
-  //   unassigned: (facility_id : string) => request<QuickAssignFailureEventEvent>(
-  //     "/api/care_quick_assign/assignments/unassigned/",
-  //     HttpMethod.GET,
-  //     { facility_id },
-  //   ),
-  //   // retry: (facility_id: string, patient_id: string) => request<
-  // }
+  quick_assignments: {
+    unassigned: (facility_id: string, page: number = 1) =>
+      request<PaginatedResponse<QuickAssignFailureEvent>>(
+        "/api/care_quick_assign/assignments/unassigned/",
+        HttpMethod.GET,
+        { facility_id, page },
+      ),
+    retry: (facility_id: string, patient_id: string) =>
+      request<{ message: string }>(
+        `/api/care_quick_assign/assignments/unassigned/${patient_id}/retry/`,
+        HttpMethod.POST,
+        { facility_id },
+      ),
+  },
 };
