@@ -1,5 +1,6 @@
 import { ShuffleIcon } from "lucide-react";
 import routes from "@/routes";
+import { lazy } from "react";
 
 const getBaseUrl = () => {
   const url = window.location.href;
@@ -12,7 +13,11 @@ const manifest = {
   plugin: "care_quick_assign",
   routes: routes,
   extends: [],
-  components: {},
+  components: {
+    PatientRegistrationForm: lazy(
+      () => import("./components/pluggables/PatientRegistrationForm"),
+    ),
+  },
   navItems: [
     {
       name: "Care Quick Assign",
